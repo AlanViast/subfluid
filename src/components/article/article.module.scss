@@ -17,8 +17,9 @@
   margin-top: 4px;
 
   h1, h2, h3, h4, h5, h6 {
+    font-family: serif;
     font-size: initial;
-    font-weight: initial;
+    font-weight: bold;
   }
 
   > * {
@@ -34,6 +35,7 @@
   }
 
   p {
+    font-family: serif;
     font-size: 20px;
     line-height: 32px;
   }
@@ -44,6 +46,20 @@
   font-weight: 500;
   line-height: 15px;
   text-align: left;
+}
+
+.vault {
+  font-size: 12px;
+  font-weight: 500;
+  line-height: 15px;
+  text-align: left;
+  color: #616161c0;
+
+  &:hover {
+    color: #222baa;
+    text-decoration: underline; // 鼠标悬停时显示下划线
+
+  }
 }
 
 .created-time {

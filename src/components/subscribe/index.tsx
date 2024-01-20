@@ -68,35 +68,31 @@ function SubscribeModal(props: any, ref: Ref<SubscribeModalType>) {
   const [currentPlanName, setCurrentPlanName] = useState<string>('None');
   const {provider, scaAddress} = useWalletContext();
   const [loading, setLoading] = useState(false);
+  const [txHash, setTxHash] = useState<string>('None');
 
   const plans: PlanItem[] = [
     {
       name: 'Monthly',
-      price: '33 GHO/month',
+      price: '15 GHO/month',
       features: [
-        'Lörem ipsum saska prostat. Suprasm adöbel nuheten fabel tratres. ',
-        'Lörem ipsum saska prostat.',
-        'Lörem ipsum saska prostat. Suprasm adöbel nuheten fabel tratres. '
+        'Integrating More Collaterals: Expansion to include more types of collateral such as DAI, ETH, WBTC, and others.',
+        'Implementing a Fully On-Chain Time-Lock Mechanism: To enhance security and trust in the subscription process.',
       ]
     },
     {
       name: 'Annual',
-      price: '66 GHO/month',
+      price: '144 GHO/month',
       features: [
-        'Lörem ipsum saska prostat. Suprasm adöbel nuheten fabel tratres. ',
-        'Lörem ipsum saska prostat.',
-        'Lörem ipsum saska prostat. Suprasm adöbel nuheten fabel tratres. ',
-        'Lörem ipsum saska prostat. Suprasm adöbel nuheten fabel tratres. '
+        "Establishing a Creator Incentive Pool: Part of the pool's earnings will be allocated as a paymaster to subsidize transaction fees for the creator.  ",
+        'Automating Interest Rate Mechanisms: Streamlining on-chain interest rates and adding more stablecoin protocols to the mix.',
       ]
     },
     {
       name: 'None',
       price: 'Free',
       features: [
-        'Lörem ipsum saska prostat. Suprasm adöbel nuheten fabel tratres. ',
-        'Lörem ipsum saska prostat.',
-        'Lörem ipsum saska prostat. Suprasm adöbel nuheten fabel tratres. ',
-        'Lörem ipsum saska prostat. Suprasm adöbel nuheten fabel tratres. '
+        'Incentive Tokens: Introducing tokens to forge stronger bonds between creators and subscribers, aligning their interests.',
+        'Crypto-Native Payment Gateway: Developing a dedicated platform for seamless crypto transactions within the ecosystem.',
       ]
     }
   ]
@@ -129,7 +125,6 @@ function SubscribeModal(props: any, ref: Ref<SubscribeModalType>) {
       return;
     }
 
-
     const testSubscriber = new SubscriberViem(provider.rpcClient);
     const serviceAddr = clientEnv.NEXT_PUBLIC_VAULT_ADDRESS
     const address = await provider.getAddress()
@@ -137,8 +132,9 @@ function SubscribeModal(props: any, ref: Ref<SubscribeModalType>) {
     setLoading(true);
     const uoHash = await provider.sendUserOperation(batchUserOperations as BatchUserOperationCallData);
     try {
-      const txHash = await provider.waitForUserOperationTransaction(uoHash.hash);
-      console.log('Submit Transaction:', txHash);
+      const uoTxHash = await provider.waitForUserOperationTransaction(uoHash.hash);
+      setTxHash(uoTxHash);
+      console.log('Submit Transaction:', uoTxHash);
     } catch (e) {
       console.log(e)
       return;
@@ -183,6 +179,10 @@ function SubscribeModal(props: any, ref: Ref<SubscribeModalType>) {
                   onClick={handleClose}>
                 Continue reading
               </button>
+
+              <div className="flex flex-row items-center mt-[10px]">
+                <a className={styles.txhash} target='_blank' href={`https://sepolia.etherscan.io/tx/${txHash}`}>Subscribed TxHash: {txHash.slice(0, 25)}...{txHash.slice(-6)}</a>
+              </div>
 
               <div className="flex flex-row items-center mt-[95px]">
                 <Image src="/icon/powered.svg" alt="powered" width={22} height={22}/>

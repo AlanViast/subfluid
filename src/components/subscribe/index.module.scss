@@ -11,3 +11,23 @@
     border: 2px solid #8D50DB
   }
 }
+
+.txhash {
+  font-size: 12px;
+  font-weight: 500;
+  line-height: 15px;
+  color: #616161c0;
+
+  &:hover {
+    color: #222baa;
+    text-decoration: underline;
+  }
+
+.txhash-p {
+  font-size: 12px;
+  font-weight: 500;
+  line-height: 15px;
+  color: #616161c0;
+}
+
+}
